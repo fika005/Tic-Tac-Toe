@@ -12,12 +12,12 @@ I've provided some starter code for you for this assignment; you are welcome to 
    
 | Algorithm  | Time Complexity  | Space Complexity  | Complete?  | Optimal?  |
 |---|---|---|---|---|
-| BFS  |   |   |   |   |
-| UCS  |   |   |   |   |
-| DFS   |   |   |   |   |
-| DLS  |   |   |   |   |
-| IDS |    |   |   |   |
-|A*  |    |    |   |   |
+| BFS  | O(b<sup>d+1</sup>)  | O(b<sup>d+1</sup>)  |  Yes |  Yes if uniform cost otherwise no |
+| UCS  | O(b<sup>d+1</sup>)  | O(b<sup>d+1</sup>)  |  Yes |  Yes if uniform cost otherwise no |
+| DFS   | O(b<sup>n</sup>)  | O(bn)  | Yes  |  No |
+| DLS  | O(b<sup>k</sup>)  | O(bk)  | Yes  |  No |
+| IDS | O(b<sup>d</sup>)  | O(bd)  | Yes  |  No |
+|A*  |  O(b<sup>d</sup>)  |  O(b<sup>d</sup>)  | Yes  | Yes in cases where our heuristic is admissible  |
 
 
 2. (15 points) Search. I've provided an example class for you for solving the Fox and Chickens problem. Using the FoxAndChickensState as an example, 
@@ -31,6 +31,22 @@ and iterative deepening depth-first search.
 5. (15 points) Implement A* for the 8-puzzle, using Manhattan distance as a heuristic. You will probably want to use the heapq module for your priority queue.
 
 7. (10 points) Run each of your functions on the 8-puzzle, and measure the number of states generated. Prepare a table showing your results.
+
+For the initail state of 
+
+[[1, 'B', 2],
+
+  [4, 5, 3],
+  
+   [7, 8, 6]]
+
+| Algorithm  | Number of states generated 
+|---|---|
+| BFS  | 65 |
+| DFS   | Does not complete |
+| DLS  | 80  |
+| IDS | 38  |
+|A*  | 8  |
 
 6. (20 points). I've provided a TicTacToeState class. Using this, complete the implementation of the minimax algorithm for two-player search. Add a wrapper around this that allows a person to play tic-tac-toe against the computer.
 

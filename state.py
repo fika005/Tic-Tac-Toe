@@ -1,4 +1,5 @@
 import copy
+import random
 
 ### An abstract class that other states will inherit from.
 class State:
@@ -116,6 +117,8 @@ class TicTacToeState(State):
             self.board = [[' ', ' ', ' '],
                           [' ', ' ', ' '],
                           [' ', ' ', ' ']]
+            self.move_orders = []
+
 
     def isGoal(self):
         ### we have a win
@@ -150,8 +153,84 @@ class TicTacToeState(State):
                 self.score = 1
             else:
                 self.score = -1
-        else :
+        else:
             self.score = 0
 
     def __repr__(self):
         return " %s\n %s\n %s\n" % (self.board[0], self.board[1], self.board[2])
+
+    def __lt__(self, other):
+        return self.score < other.score
+
+    def __hash__(self):
+        return hash(str(self.board))
+
+
+class EightPuzzleState(State):
+    def __init__(self, puzzle_list=None, level=0):
+        if puzzle_list:
+            self.state = puzzle_list
+        else:
+            # self.state = [i for i in range(1, 9)] + ['B']
+            # random.shuffle(self.state)
+            self.state = [1, 'B', 2, 4, 5, 3, 7, 8, 6]
+        self.level = level
+
+    def isGoal(self):
+        for i, j in zip(range(1, 9), self.state):
+            if i != j:
+                return False
+        return True
+
+    def swap(self, ind1, ind2):
+        lst = self.state.copy()
+        temp = lst[ind1]
+        lst[ind1] = lst[ind2]
+        lst[ind2] = temp
+        return lst
+
+    def move_blank(self, move):
+        blank_index = self.state.index('B')
+        if move == 'right':
+            if blank_index % 3 == 2:
+                return None
+            return self.swap(blank_index, blank_index + 1)
+        if move == 'left':
+            if blank_index % 3 == 0:
+                return None
+            return self.swap(blank_index, blank_index - 1)
+        if move == 'up':
+            if blank_index // 3 == 0:
+                return None
+            return self.swap(blank_index, blank_index - 3)
+        if move == 'down':
+            if blank_index // 3 == 2:
+                return None
+            return self.swap(blank_index, blank_index + 3)
+
+    def cost(self):
+        cost = 0
+        for i, j in zip(range(1, 9), self.state):
+            if j == 'B':
+                j = 9
+            cost += abs(i - j)
+        return cost
+
+    def successors(self):
+        successor_states = []
+        for move in ['left', 'right', 'up', 'down']:
+            new_state_list = self.move_blank(move)
+            if new_state_list:
+                successor_states.append(EightPuzzleState(new_state_list, self.level + 1))
+        return successor_states
+
+    def __repr__(self):
+        return str(self.state)
+
+    def __lt__(self, other):
+        return self.cost() + self.level < other.cost() + other.level
+
+    def __hash__(self):
+        return hash(str(self.state))
+
+
