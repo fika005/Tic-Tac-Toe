@@ -1,0 +1,26 @@
+
+Assignment 2 grading comments:
+
+Part 1: 20/20
+
+Part 2: 15/15
+
+Part 3: 10/10
+
+Part 4: 10/10
+
+Part 5: 15/15
+
+Part 6: 10/10
+
+Part 7: 20/20
+
+Part 8: 20/20
+Good summary. Deep Blue was heavily engineered to solve chess, with specialized hardware,
+databases of starting and ending moves, and customized search. On the other hand, AlphaZero
+focuses on using reinforcement learning to develop an extremely accurate evaluation function,
+and then just uses a pretty simple search algorithm with it.
+
+120/120
+
+ 
